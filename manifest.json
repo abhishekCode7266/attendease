@@ -1,0 +1,11 @@
+{
+  "name": "AttendEase",
+  "short_name": "AttendEase",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#2563eb",
+  "theme_color": "#2563eb",
+  "description": "Smart, Offline Student Attendance & Academic Portal",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
+}
