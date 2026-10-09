@@ -29,7 +29,7 @@ class DatabaseHelper {
       password: 'password123',
       email: 'aarav.sharma@college.edu',
       phone: '9876543210',
-      createdAt: DateTime(2026, 1, 1),
+      createdAt: '2026-01-01',
     ),
     StudentModel(
       id: 2,
@@ -39,7 +39,7 @@ class DatabaseHelper {
       password: 'password123',
       email: 'priya.patel@college.edu',
       phone: '9876543211',
-      createdAt: DateTime(2026, 1, 1),
+      createdAt: '2026-01-01',
     ),
     StudentModel(
       id: 3,
@@ -49,7 +49,7 @@ class DatabaseHelper {
       password: 'password123',
       email: 'rohan.verma@college.edu',
       phone: '9876543212',
-      createdAt: DateTime(2026, 1, 1),
+      createdAt: '2026-01-01',
     ),
     StudentModel(
       id: 4,
@@ -59,7 +59,7 @@ class DatabaseHelper {
       password: 'password123',
       email: 'ananya.gupta@college.edu',
       phone: '9876543213',
-      createdAt: DateTime(2026, 1, 1),
+      createdAt: '2026-01-01',
     ),
     StudentModel(
       id: 5,
@@ -69,7 +69,7 @@ class DatabaseHelper {
       password: 'password123',
       email: 'vikram.singh@college.edu',
       phone: '9876543214',
-      createdAt: DateTime(2026, 1, 1),
+      createdAt: '2026-01-01',
     ),
   ];
 
