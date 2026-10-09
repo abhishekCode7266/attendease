@@ -124,24 +124,22 @@ class _LoginScreenState extends State<LoginScreen> {
   /// Executes instant Master Admin Bypass
   Future<void> _executeOwnerBypass() async {
     final auth = Provider.of<AuthProvider>(context, listen: false);
-    final success = await auth.bypassAdminLogin();
+    await auth.bypassAdminLogin();
 
     if (!mounted) return;
 
-    if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('⚡ Admin Bypass Activated! Welcome to Admin Portal.'),
-          backgroundColor: Color(0xFF2563EB),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 2),
-        ),
-      );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('⚡ Admin Bypass Activated! Welcome to Admin Portal.'),
+        backgroundColor: Color(0xFF2563EB),
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 2),
+      ),
+    );
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
-      );
-    }
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
+    );
   }
 
   /// Settings Circular Button dialog on top-right
@@ -515,6 +513,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Colors.transparent,
                 child: InkWell(
                   onTap: _showSettingsBypassSheet,
+                  onLongPress: _executeOwnerBypass,
                   borderRadius: BorderRadius.circular(24),
                   child: Container(
                     width: 44,

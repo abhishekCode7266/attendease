@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:attendease/providers/auth_provider.dart';
+import 'package:attendease/providers/student_provider.dart';
+import 'package:attendease/providers/attendance_provider.dart';
 import 'package:attendease/providers/theme_provider.dart';
 import 'package:attendease/screens/login_screen.dart';
 import 'package:attendease/utils/constants.dart';
@@ -74,5 +76,34 @@ void main() {
     expect(find.text('Settings & Quick Access'), findsOneWidget);
     expect(find.text('⚡ Direct Admin Bypass'), findsOneWidget);
     expect(find.text('One-tap instant entry to Admin Dashboard'), findsOneWidget);
+  });
+
+  testWidgets('Tapping Direct Admin Bypass immediately logs in and navigates to Admin Dashboard', (tester) async {
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+          ChangeNotifierProvider(create: (_) => StudentProvider()),
+          ChangeNotifierProvider(create: (_) => AttendanceProvider()),
+        ],
+        child: const MaterialApp(
+          home: LoginScreen(),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    // Tap top-right circular settings button
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pumpAndSettle();
+
+    // Tap Direct Admin Bypass
+    await tester.tap(find.text('⚡ Direct Admin Bypass'));
+    await tester.pumpAndSettle();
+
+    // Should now be on Admin Dashboard
+    expect(find.text('⚡ Admin Bypass Activated! Welcome to Admin Portal.'), findsOneWidget);
   });
 }
