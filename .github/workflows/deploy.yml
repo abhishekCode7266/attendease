@@ -1,4 +1,4 @@
-name: Deploy AttendEase & Build APK
+name: Deploy Student Attendance Portal & Build APK
 
 on:
   push:
@@ -104,7 +104,7 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: attendease-release-apk
+          name: student-attendance-portal-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
           retention-days: 30

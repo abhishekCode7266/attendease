@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
 import '../utils/constants.dart';
+import '../widgets/portal_logo.dart';
 import 'admin_dashboard_screen.dart';
 import 'login_screen.dart';
 import 'student_dashboard_screen.dart';
@@ -72,19 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.15),
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 2),
-              ),
-              child: const Icon(
-                Icons.fact_check_rounded,
-                size: 72,
-                color: Colors.white,
-              ),
-            ),
+            const PortalLogo(size: 88),
             const SizedBox(height: 24),
             const Text(
               AppConstants.appName,

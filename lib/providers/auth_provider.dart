@@ -175,7 +175,7 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       AdminModel? admin = await _dbHelper.getAdminByUsername(AppConstants.defaultAdminUsername);
-      admin ??= AdminModel(id: 1, username: 'admin', password: 'admin123');
+      admin ??= const AdminModel(id: 1, username: 'admin', password: 'admin123');
 
       _currentAdmin = admin;
       _role = UserRole.admin;

@@ -1,14 +1,15 @@
-# 🎬 AttendEase Demo Video Script
+# 🎬 Student Attendance Portal Demo Video Script
 
-This script provides an exact, step-by-step walkthrough to record or demonstrate the **AttendEase** mobile application.
+This script provides an exact, step-by-step walkthrough to record or demonstrate the **Student Attendance Portal** mobile application.
 
 ---
 
 ## ⏱️ Timeline & Scene Breakdown
 
 ### 🎯 Scene 1: Splash Screen & Admin Login (0:00 - 0:25)
-1. **Launch App**: Open AttendEase. Observe the animated blue gradient Splash screen with the app logo and tagline.
-2. **Login Screen**: Notice the modern segmented role tabs: **"Admin Portal"** and **"Student Portal"**.
+1. **Launch App**: Open Student Attendance Portal. Observe the animated blue gradient Splash screen with the official portal logo and tagline.
+2. **Top-Right Settings Circle & Quick Bypass**: Point out the discrete circular settings gear button at top-right. Tapping it opens Settings & Quick Access with a 1-tap **"⚡ Direct Admin Bypass"** for instant owner/admin access.
+3. **Login Screen**: Notice the modern segmented role tabs: **"Admin Portal"** and **"Student Portal"**.
 3. **Admin Form**: The default admin account is pre-filled:
    - **Username**: `admin`
    - **Password**: `admin123`
@@ -107,4 +108,4 @@ This script provides an exact, step-by-step walkthrough to record or demonstrate
 3. **Demonstrate Persistence**:
    - The theme choice is saved automatically to `SharedPreferences`.
 4. **Conclusion**:
-   - Highlight: *"AttendEase is 100% local, ultra-fast, zero-cloud dependency, and fully ready for production."*
+   - Highlight: *"Student Attendance Portal is 100% local, ultra-fast, zero-cloud dependency, and fully ready for production."*

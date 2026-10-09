@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:attendease/providers/auth_provider.dart';
+import 'package:attendease/providers/theme_provider.dart';
 import 'package:attendease/screens/login_screen.dart';
 import 'package:attendease/utils/constants.dart';
 
@@ -11,10 +12,11 @@ void main() {
     SharedPreferences.setMockInitialValues({});
   });
 
-  testWidgets('LoginScreen renders role tabs and input fields correctly', (tester) async {
+  testWidgets('LoginScreen renders role tabs, inputs, and settings bypass icon', (tester) async {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
           ChangeNotifierProvider(create: (_) => AuthProvider()),
         ],
         child: const MaterialApp(
@@ -23,17 +25,19 @@ void main() {
       ),
     );
 
-    // Allow async initializations
     await tester.pumpAndSettle();
 
     // Verify brand title
     expect(find.text(AppConstants.appName), findsOneWidget);
 
+    // Verify top-right settings circle button
+    expect(find.byIcon(Icons.settings_outlined), findsOneWidget);
+
     // Verify Role buttons
     expect(find.text('Admin Portal'), findsOneWidget);
     expect(find.text('Student Portal'), findsOneWidget);
 
-    // Initially in Admin portal, expect Admin Username field
+    // Initially in Admin portal
     expect(find.text('Admin Username'), findsOneWidget);
     expect(find.text('Password'), findsOneWidget);
     expect(find.text('Login as Admin'), findsOneWidget);
@@ -47,10 +51,11 @@ void main() {
     expect(find.text('Login as Student'), findsOneWidget);
   });
 
-  testWidgets('Logo long-press displays hidden owner master access dialog', (tester) async {
+  testWidgets('Tapping top-right settings button opens Settings & Quick Access with Direct Admin Bypass', (tester) async {
     await tester.pumpWidget(
       MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
           ChangeNotifierProvider(create: (_) => AuthProvider()),
         ],
         child: const MaterialApp(
@@ -61,14 +66,13 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Long press on brand logo
-    final logoFinder = find.byIcon(Icons.fact_check_rounded);
-    expect(logoFinder, findsOneWidget);
-    await tester.longPress(logoFinder);
+    // Tap top-right circular settings button
+    await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
 
-    // Verify private owner dialog is displayed
-    expect(find.text('Owner Master Access'), findsOneWidget);
-    expect(find.text('Unlock Admin Portal'), findsOneWidget);
+    // Verify bottom sheet contents
+    expect(find.text('Settings & Quick Access'), findsOneWidget);
+    expect(find.text('⚡ Direct Admin Bypass'), findsOneWidget);
+    expect(find.text('One-tap instant entry to Admin Dashboard'), findsOneWidget);
   });
 }

@@ -1,14 +1,14 @@
 # Student Attendance Portal 📱🎓
 ### Production-Ready Offline Student Attendance & Academic Management Mobile Application
 
-[![Deploy AttendEase & Build APK](https://github.com/abhishekCode7266/attendease/actions/workflows/deploy.yml/badge.svg)](https://github.com/abhishekCode7266/attendease/actions/workflows/deploy.yml)
-[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success?logo=github)](https://abhishekcode7266.github.io/attendease/)
-[![Download APK](https://img.shields.io/badge/Download_APK-Release-blue?logo=android)](https://github.com/abhishekCode7266/attendease/actions)
+[![Deploy Student Attendance Portal & Build APK](https://github.com/abhishekCode7266/student-attendance-portal/actions/workflows/deploy.yml/badge.svg)](https://github.com/abhishekCode7266/student-attendance-portal/actions/workflows/deploy.yml)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success?logo=github)](https://abhishekcode7266.github.io/student-attendance-portal/)
+[![Download APK](https://img.shields.io/badge/Download_APK-Release-blue?logo=android)](https://github.com/abhishekCode7266/student-attendance-portal/actions)
 
-🌐 **Live Web Application**: [https://abhishekcode7266.github.io/attendease/](https://abhishekcode7266.github.io/attendease/)  
+🌐 **Live Web Application**: [https://abhishekcode7266.github.io/student-attendance-portal/](https://abhishekcode7266.github.io/student-attendance-portal/)  
 📦 **Android Release APK**: Generated and available in GitHub Actions Artifacts.
 
-> **Student Attendance Portal** is a modern, high-performance Flutter mobile application built exclusively with a **100% LOCAL SQLite Database (`sqflite`)**. It runs entirely offline without Firebase, backend servers, or internet access required. Includes a discrete owner/developer quick master bypass.
+> **Student Attendance Portal** is a modern, high-performance Flutter mobile application built exclusively with a **100% LOCAL SQLite Database (`sqflite`)**. It runs entirely offline without Firebase, backend servers, or internet access required. Features a dedicated top-right settings button with 1-tap **Direct Admin Bypass** and high-resolution portal branding.
 
 ---
 
@@ -140,7 +140,7 @@ CREATE TABLE announcements (
 ## 📁 Project Structure
 
 ```
-attendease/
+student_attendance_portal/
 ├── android/                        # Android build scripts, Gradle & Manifest
 │   ├── app/
 │   │   ├── build.gradle            # minSdkVersion 21, compileSdk 34
@@ -246,7 +246,7 @@ build/app/outputs/flutter-apk/app-release.apk
 
 ## 🧪 Pre-Seeded Local Accounts
 
-Because AttendEase works 100% offline, the database automatically seeds initial testing data upon first run:
+Because Student Attendance Portal works 100% offline, the database automatically seeds initial testing data upon first run:
 
 | Role | Username / Roll No | Password | Description |
 |---|---|---|---|
