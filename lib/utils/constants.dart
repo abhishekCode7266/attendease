@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 /// App-wide constants for AttendEase
 class AppConstants {
   // App Info
-  static const String appName = 'AttendEase';
-  static const String appTagline = 'Smart, Offline Student Attendance & Management';
+  static const String appName = 'Student Attendance Portal';
+  static const String appTagline = 'Offline Student Attendance & Academic Portal';
   static const String appVersion = '1.0.0';
 
   // Database

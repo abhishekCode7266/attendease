@@ -123,7 +123,7 @@ class SettingsScreen extends StatelessWidget {
               Text('Logout?'),
             ],
           ),
-          content: const Text('Are you sure you want to log out of AttendEase?'),
+          content: Text('Are you sure you want to log out of ${AppConstants.appName}?'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogCtx).pop(),
@@ -331,7 +331,7 @@ class SettingsScreen extends StatelessWidget {
             ),
             child: ListTile(
               leading: const Icon(Icons.info_outline_rounded, color: Color(0xFF6366F1)),
-              title: const Text('About AttendEase', style: TextStyle(fontWeight: FontWeight.w600)),
+              title: Text('About ${AppConstants.appName}', style: const TextStyle(fontWeight: FontWeight.w600)),
               subtitle: const Text('Version ${AppConstants.appVersion}', style: TextStyle(fontSize: 12)),
               trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () {
@@ -340,9 +340,9 @@ class SettingsScreen extends StatelessWidget {
                   applicationName: AppConstants.appName,
                   applicationVersion: 'v${AppConstants.appVersion}',
                   applicationIcon: const Icon(Icons.fact_check_rounded, size: 40, color: Color(0xFF2563EB)),
-                  children: const [
+                  children: [
                     Text(
-                      'AttendEase is a high-performance offline mobile student attendance system built with Flutter and SQLite. Designed for universities and schools to track attendance, leaves, and analytics without internet access.',
+                      '${AppConstants.appName} is a high-performance offline mobile student attendance system built with Flutter and SQLite. Designed for universities and schools to track attendance, leaves, and analytics without internet access.',
                     ),
                   ],
                 );
